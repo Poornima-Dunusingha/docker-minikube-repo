@@ -1,24 +1,36 @@
 pipeline {
-    agent any
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
+  agent any
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
+    }
+    environment {
+    KUBECONFIG = 'C:\\Users\\Poornima\\.kube\\config'
+    }
+    stage('Deploy to Minikube') {
+      steps {
+        script {
+          bat 'kubectl apply -f deployment.yaml'
+          bat 'kubectl apply -f service.yaml'
         }
-        stage('Build') {
-            steps {
 
-                echo 'testing'
-            }
-        }
+      }
     }
-    post {
-        success {
-            echo 'test 1 success'
-        }
-        failure {
-            echo 'Pipeline failed'
-        }
+
+  }
+  environment {
+    KUBECONFIG = 'C:\\Users\\Poornima\\.kube\\config'
+  }
+  post {
+    success {
+      echo 'Deployment successful!'
     }
+
+    failure {
+      echo 'Deployment failed!'
+    }
+
+  }
 }
