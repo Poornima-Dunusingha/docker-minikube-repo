@@ -1,12 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('Version Check') {
+    stage('Hello Message') {
       steps {
-        sh '''java -version
-mvn -v
-git --version
-'''
+        echo 'WELCOME '
       }
     }
 
