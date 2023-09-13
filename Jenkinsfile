@@ -7,5 +7,14 @@ pipeline {
       }
     }
 
+    stage('JavaVersion') {
+      steps {
+        sh '''java --version
+mvn -v
+git --version
+'''
+      }
+    }
+
   }
 }
