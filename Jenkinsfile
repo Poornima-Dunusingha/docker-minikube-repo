@@ -1,13 +1,13 @@
 pipeline {
   agent any
+  environment {
+    KUBECONFIG = 'C:\\Users\\Poornima\\.kube\\config'
+  }
   stages {
     stage('Checkout') {
       steps {
         checkout scm
       }
-    }
-    environment {
-    KUBECONFIG = 'C:\\Users\\Poornima\\.kube\\config'
     }
     stage('Deploy to Minikube') {
       steps {
