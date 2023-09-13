@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        KUBECONFIG = 'C:\\Users\\Users\\Poornima\\config'
+        KUBECONFIG = 'C:\\Users\\Poornima\\.kube\\config'
     }
 
  
