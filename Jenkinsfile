@@ -1,38 +1,34 @@
 pipeline {
-    agent any
-
-    environment {
-        KUBECONFIG = 'C:\\Users\\Poornima\\.kube\\config'
+  agent any
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
     }
 
- 
-
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
+    stage('Deploy to Minikube') {
+      steps {
+        script {
+          bat 'start kubectl --kubeconfig=${KUBECONFIG} apply -f deployment.yaml'
+          bat 'start kubectl --kubeconfig=${KUBECONFIG} apply -f service.yaml'
         }
 
-        stage('Deploy to Minikube') {
-            steps {
-                script {
-                    // Use 'start' to run a command in the background on Windows
-                    bat 'start kubectl --kubeconfig=${KUBECONFIG} apply -f deployment.yaml'
-                    bat 'start kubectl --kubeconfig=${KUBECONFIG} apply -f service.yaml'
-                }
-            }
-        }
+      }
     }
 
- 
-
-    post {
-        success {
-            echo 'Deployment successful!'
-        }
-        failure {
-            echo 'Deployment failed!'
-        }
+  }
+  environment {
+    KUBECONFIG = 'C:\\Users\\Poornima\\.kube\\config'
+  }
+  post {
+    success {
+      echo 'Deployment successful!'
     }
+
+    failure {
+      echo 'Deployment failed!'
+    }
+
+  }
 }
