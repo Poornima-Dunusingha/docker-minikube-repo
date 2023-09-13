@@ -1,34 +1,24 @@
 pipeline {
-  agent any
-  stages {
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
-    }
-
-    stage('Deploy to Minikube') {
-      steps {
-        script {
-          bat 'start kubectl --kubeconfig=${KUBECONFIG} apply -f deployment.yaml'
-          bat 'start kubectl --kubeconfig=${KUBECONFIG} apply -f service.yaml'
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
         }
+        stage('Build') {
+            steps {
 
-      }
+                bat 'mvn clean install'
+            }
+        }
     }
-
-  }
-  environment {
-    KUBECONFIG = 'C:\\Users\\Poornima\\.kube\\config'
-  }
-  post {
-    success {
-      echo 'Deployment successful!'
+    post {
+        success {
+            echo 'test 1 success'
+        }
+        failure {
+            echo 'Pipeline failed'
+        }
     }
-
-    failure {
-      echo 'Deployment failed!'
-    }
-
-  }
 }
