@@ -8,11 +8,27 @@ pipeline {
     }
 
     stage('JavaVersion') {
-      steps {
-        sh '''java --version
-mvn -v
-git --version
+      parallel {
+        stage('JavaVersion') {
+          steps {
+            sh '''java --version
+
 '''
+          }
+        }
+
+        stage('maven version') {
+          steps {
+            sh 'mvn -v'
+          }
+        }
+
+        stage('gitversion') {
+          steps {
+            sh 'git --version'
+          }
+        }
+
       }
     }
 
