@@ -6,11 +6,12 @@ pipeline {
         checkout scm
       }
     }
+
     stage('Deploy to Minikube') {
       steps {
         script {
-          bat 'kubectl apply -f deployment.yaml'
-          bat 'kubectl apply -f service.yaml'
+          bat 'start kubectl --kubeconfig=${KUBECONFIG} apply -f deployment.yaml'
+          bat 'start kubectl --kubeconfig=${KUBECONFIG} apply -f service.yaml'
         }
 
       }
