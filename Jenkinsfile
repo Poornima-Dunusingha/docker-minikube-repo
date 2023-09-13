@@ -1,8 +1,5 @@
 pipeline {
   agent any
-  environment {
-    KUBECONFIG = 'C:\\Users\\Poornima\\.kube\\config'
-  }
   stages {
     stage('Checkout') {
       steps {
